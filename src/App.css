@@ -1,0 +1,11 @@
+.pizza-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.header-background {
+  height: 250px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
