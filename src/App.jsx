@@ -12,7 +12,7 @@ const App = () => {
       <Navbar />
       {/* <Home /> */}
       <Register />
-      {/* <Login /> */}
+      <Login />
       <Footer />
     </div>
   );
