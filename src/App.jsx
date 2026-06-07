@@ -1,5 +1,5 @@
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
+// import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Home />
+      {/* <Home /> */}
       {/* <Register />
       <Login /> */}
       <Cart />
