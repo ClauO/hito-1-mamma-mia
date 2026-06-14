@@ -1,12 +1,28 @@
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import CardPizza from "./CardPizza";
-import { pizzas } from "../mocks/pizzas";
 
 const Home = () => {
+  const [pizzas, setPizzas] = useState([]);
+
+  // Función asíncrona para consumir la API
+  const getPizzas = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/pizzas");
+      const data = await response.json();
+      setPizzas(data);
+    } catch (error) {
+      console.error("Error fetching pizzas:", error);
+    }
+  };
+
+  useEffect(() => {
+    getPizzas();
+  }, []);
+
   return (
     <>
       <Header />
-
       <div className="container mt-5 mb-5">
         <div className="row justify-content-center g-4">
           {pizzas.map((pizza) => (
