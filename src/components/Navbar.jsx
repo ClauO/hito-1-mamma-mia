@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { formatCurrency } from "../utils/format";
 
 const Navbar = () => {
@@ -6,27 +7,34 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Pizzería Mamma Mia!
-        </a>
-        <div className="collapse navbar-collapse d-flex justify-content-between">
-          <ul className="navbar-nav mb-2 mb-lg-0 d-flex gap-2">
+      <div className="container">
+        <Link className="navbar-brand" to="/">
+          ¡Pizzería Mamma Mía!
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <button className="btn btn-outline-light text-white">
+              <Link className="nav-link text-white" to="/">
                 🍕 Home
-              </button>
+              </Link>
             </li>
-
             {token ? (
               <>
                 <li className="nav-item">
-                  <button className="btn btn-outline-light text-white">
+                  <Link className="nav-link text-white" to="/profile">
                     🔓 Profile
-                  </button>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-outline-light text-white">
+                  <button className="nav-link text-white btn btn-link">
                     🔒 Logout
                   </button>
                 </li>
@@ -34,22 +42,23 @@ const Navbar = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <button className="btn btn-outline-light text-white">
+                  <Link className="nav-link text-white" to="/login">
                     🔐 Login
-                  </button>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <button className="btn btn-outline-light text-white">
-                    🔐 Register
-                  </button>
+                  <Link className="nav-link text-white" to="/register">
+                    🔏 Register
+                  </Link>
                 </li>
               </>
             )}
           </ul>
-
-          <button className="btn btn-outline-info">
-            🛒 Total: ${formatCurrency(total)}
-          </button>
+          <div className="d-flex">
+            <Link to="/cart" className="btn btn-outline-info">
+              🛒 Total: ${formatCurrency(total)}
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
