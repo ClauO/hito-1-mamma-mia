@@ -1,4 +1,9 @@
-const CardPizza = ({ name, price, ingredients, img }) => {
+import { useContext } from "react"; // 1. Importar el hook useContext
+import { CartContext } from "../context/CartContext"; // 2. Importar el contexto
+
+const CardPizza = ({ id, name, price, ingredients, img }) => {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <div className="card" style={{ width: "18rem" }}>
       <img src={img} className="card-img-top pizza-img" alt={`Pizza ${name}`} />
@@ -25,7 +30,12 @@ const CardPizza = ({ name, price, ingredients, img }) => {
 
         <div className="d-flex justify-content-around mt-3">
           <button className="btn btn-outline-dark">Ver Más 👀</button>
-          <button className="btn btn-dark">Añadir 🛒</button>
+          <button
+            className="btn btn-dark"
+            onClick={() => addToCart({ id, name, price, img })}
+          >
+            Añadir 🛒
+          </button>
         </div>
       </div>
     </div>
