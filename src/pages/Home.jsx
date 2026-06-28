@@ -31,6 +31,7 @@ const Home = () => {
               className="col-12 col-md-4 d-flex justify-content-center"
             >
               <CardPizza
+                id={pizza.id}
                 name={pizza.name}
                 price={pizza.price}
                 ingredients={pizza.ingredients}
