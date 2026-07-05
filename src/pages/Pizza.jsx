@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const Pizza = () => {
   const [pizza, setPizza] = useState(null);
+  const { id } = useParams(); // Obtenemos el id dinámico de la URL
 
   const getPizza = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/pizzas/p001");
+      // Usamos el id en la URL de la API
+      const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
       const data = await response.json();
       setPizza(data);
     } catch (error) {
@@ -15,7 +18,7 @@ const Pizza = () => {
 
   useEffect(() => {
     getPizza();
-  }, []);
+  }, [id]);
 
   if (!pizza) {
     return (
@@ -40,14 +43,12 @@ const Pizza = () => {
             <div className="card-body">
               <h3 className="card-title text-capitalize">Pizza {pizza.name}</h3>
               <p className="card-text text-muted">{pizza.desc}</p>
-
               <p className="card-text fw-bold mb-1">Ingredientes:</p>
               <ul className="text-capitalize list-unstyled">
                 {pizza.ingredients.map((ingredient, index) => (
                   <li key={index}>🍕 {ingredient}</li>
                 ))}
               </ul>
-
               <h4 className="mt-4">
                 Precio: ${pizza.price.toLocaleString("es-CL")}
               </h4>

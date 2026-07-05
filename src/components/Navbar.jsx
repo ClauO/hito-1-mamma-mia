@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../utils/format";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
   const { total } = useContext(CartContext);
-  const token = false;
+  const { token, logout } = useContext(UserContext); // <-- Consumimos token y logout
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -21,17 +22,35 @@ const Navbar = () => {
               </Link>
             </li>
             {token ? (
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/profile">
-                  🔓 Profile
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link text-white" to="/profile">
+                    🔓 Profile
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  {/* Ejecutamos logout al hacer click */}
+                  <button
+                    onClick={logout}
+                    className="btn btn-link nav-link text-white text-decoration-none"
+                  >
+                    🔒 Logout
+                  </button>
+                </li>
+              </>
             ) : (
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/login">
-                  🔐 Login
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link text-white" to="/login">
+                    🔐 Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-white" to="/register">
+                    🔏 Register
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
           <Link to="/cart" className="btn btn-outline-info">
