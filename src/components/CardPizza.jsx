@@ -1,5 +1,6 @@
-import { useContext } from "react"; // 1. Importar el hook useContext
-import { CartContext } from "../context/CartContext"; // 2. Importar el contexto
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const CardPizza = ({ id, name, price, ingredients, img }) => {
   const { addToCart } = useContext(CartContext);
@@ -15,7 +16,6 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
         <hr />
 
         <p className="card-text text-center text-muted mb-1">Ingredientes:</p>
-
         <ul className="text-center text-capitalize pb-2 list-unstyled mb-0">
           {ingredients.map((ingredient, index) => (
             <li key={index}>🍕 {ingredient}</li>
@@ -23,16 +23,18 @@ const CardPizza = ({ id, name, price, ingredients, img }) => {
         </ul>
 
         <hr />
-
         <h4 className="text-center py-2">
           Precio: ${price.toLocaleString("es-CL")}
         </h4>
 
         <div className="d-flex justify-content-around mt-3">
-          <button className="btn btn-outline-dark">Ver Más 👀</button>
+          <Link to={`/pizza/${id}`} className="btn btn-outline-dark">
+            Ver Más 👀
+          </Link>
+
           <button
             className="btn btn-dark"
-            onClick={() => addToCart({ id, name, price, img })}
+            onClick={() => addToCart({ id, name, price, img, ingredients })}
           >
             Añadir 🛒
           </button>
