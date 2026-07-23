@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { register } = useContext(UserContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!email || !password || !confirmPassword) {
       alert("Todos los campos son obligatorios");
       return;
     }
-
     if (password.length < 6) {
       alert("El password debe tener al menos 6 caracteres");
       return;
     }
-
     if (password !== confirmPassword) {
       alert("El password y la confirmación del password deben ser iguales");
       return;
     }
 
-    alert("¡Registro exitoso!");
-
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+    const success = await register(email, password);
+    if (success) {
+      alert("¡Registro exitoso!");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    }
   };
 
   return (

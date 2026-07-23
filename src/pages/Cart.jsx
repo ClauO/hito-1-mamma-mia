@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 import { formatCurrency } from "../utils/format";
@@ -7,10 +7,40 @@ const Cart = () => {
   const { cart, increaseQuantity, decreaseQuantity, total } =
     useContext(CartContext);
   const { token } = useContext(UserContext);
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/checkouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart: cart }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage("¡Compra realizada con éxito!");
+      } else {
+        alert("Error al procesar el pago");
+      }
+    } catch (error) {
+      console.error("Error en checkout:", error);
+    }
+  };
 
   return (
     <div className="container mt-5 mb-5">
       <h2>Carrito</h2>
+
+      {/* Mensaje de éxito */}
+      {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
+
       <div className="list-group">
         {cart.map((pizza) => (
           <div
@@ -43,8 +73,11 @@ const Cart = () => {
         ))}
       </div>
       <h3 className="mt-4">Total: ${formatCurrency(total)}</h3>
-
-      <button className="btn btn-dark mt-2" disabled={!token}>
+      <button
+        className="btn btn-dark mt-2"
+        disabled={!token}
+        onClick={handleCheckout}
+      >
         Pagar
       </button>
     </div>
